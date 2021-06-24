@@ -1,6 +1,6 @@
 {
   "name": "@potentii/rest-envelopes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Enveloping of REST messages",
   "author": "Guilherme Reginaldo Ruella <potentii@gmail.com>",
   "license": "MIT",
@@ -12,8 +12,8 @@
   },
 
   "files": [
-    "main.js",
-    "libs/",
+    "main.mjs",
+    "libs/**/*",
     "README.md",
     "LICENSE"
   ],

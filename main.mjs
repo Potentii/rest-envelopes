@@ -1,7 +1,7 @@
-import RequestEnvelope  from './lib/request-envelope.mjs';
-import ResponseEnvelope from './lib/response-envelope.mjs';
-import ApiError         from './lib/api-error.mjs';
-import ApiErrorDetail   from './lib/api-error-detail.mjs';
+import RequestEnvelope  from './libs/request-envelope.mjs';
+import ResponseEnvelope from './libs/response-envelope.mjs';
+import ApiError         from './libs/api-error.mjs';
+import ApiErrorDetail   from './libs/api-error-detail.mjs';
 
 
 
