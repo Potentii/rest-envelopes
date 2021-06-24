@@ -1,0 +1,39 @@
+{
+  "name": "@potentii/rest-envelopes",
+  "version": "1.0.0",
+  "description": "Enveloping of REST messages",
+  "author": "Guilherme Reginaldo Ruella <potentii@gmail.com>",
+  "license": "MIT",
+  
+  "main": "main.mjs",
+  "type": "module",
+  
+  "scripts": {
+  },
+
+  "files": [
+    "main.js",
+    "libs/",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "rest",
+    "api",
+    "envelope",
+    "request",
+    "response",
+    "message",
+    "payload",
+    "body"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Potentii/rest-envelopes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Potentii/rest-envelopes/issues"
+  },
+  "homepage": "https://github.com/Potentii/rest-envelopes#readme"
+  
+}
