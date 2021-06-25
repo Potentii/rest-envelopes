@@ -15,6 +15,7 @@ export default class ApiError extends Error{
 	constructor(code, message, errors){
 		super(message);
 		this.name = this.constructor.name;
+		this.message = message;
 		this.code = code;
 		
 		if(!Array.isArray(errors) && errors)

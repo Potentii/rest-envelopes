@@ -31,6 +31,16 @@ export default class ResponseEnvelope{
 	 * @param {ApiError} err
 	 */
 	static withError(err){
+		// *Removing exception related fields:
+		if(err){
+			err.name = undefined;
+			err.stack = undefined;
+			err.errors?.forEach(detail => {
+				detail.name = undefined;
+				detail.stack = undefined;
+			});
+		}
+		
 		return new ResponseEnvelope(undefined, err);
 	}
 	
