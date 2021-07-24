@@ -4,6 +4,55 @@
 
 <br>
 
+# Install
+
+Via [NPM](https://www.npmjs.com/package/@potentii/rest-envelopes):
+
+```shell
+npm install @potentii/rest-envelopes
+```
+
+<br>
+
+# What it is
+
+It just enforces a standard for API payloads.
+
+## Requests
+
+```JSON
+{
+    "data": {} 
+}
+```
+
+The content goes into the `data` property, and it can be an object or array.
+
+
+## Responses
+
+```JSON
+{
+    "data": {},
+    "error": {
+        "code": "",
+	"message": "",
+	"errors": [
+	    {
+	        "code": "",
+		"message": "",
+		"field": "",
+		"value": ""
+	    }
+	]
+    }
+}
+```
+
+At the first level of the response, either `data` or `error` should be populated, never both.
+
+<br>
+
 ## Usage
 
 Example in an [expressjs](https://www.npmjs.com/package/express) application:
@@ -65,7 +114,6 @@ app.post('/api/users', (req, res, next) => {
 });
 
 ```
-
 
 <br>
 
