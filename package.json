@@ -1,13 +1,13 @@
 {
   "name": "@potentii/rest-envelopes",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Enveloping of REST messages",
   "author": "Guilherme Reginaldo Ruella <potentii@gmail.com>",
   "license": "MIT",
   
   "main": "main.mjs",
   "type": "module",
-  
+
   "scripts": {
   },
 
@@ -20,6 +20,9 @@
   "keywords": [
     "rest",
     "api",
+    "hateoas",
+    "pagination",
+    "links",
     "envelope",
     "request",
     "response",

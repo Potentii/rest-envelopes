@@ -1,17 +1,27 @@
+import ApiErrorDetail from "./api-error-detail.mjs";
+
 export default class ApiError extends Error{
 	/**
-	 * @type {String}
+	 * @type {string}
 	 */
 	code;
 	/**
-	 * @type {String}
+	 * @type {?string}
 	 */
 	message;
 	/**
-	 * @type {ApiErrorDetail[]}
+	 * @type {?ApiErrorDetail[]}
 	 */
 	errors;
-	
+
+
+
+	/**
+	 *
+	 * @param {string} code
+	 * @param {?string} message
+	 * @param {?ApiErrorDetail|?(ApiErrorDetail[])} errors
+	 */
 	constructor(code, message, errors){
 		super(message);
 		this.name = this.constructor.name;
@@ -30,11 +40,28 @@ export default class ApiError extends Error{
 	}
 
 
+
+	/**
+	 * Converts a plain object into a new instance of this class
+	 * @param {ApiError|object} obj
+	 * @return {?ApiError}
+	 */
+	static from(obj){
+		if(!obj) return null;
+		return new ApiError(
+			obj.code,
+			obj.message,
+			obj.errors?.map?.(ApiErrorDetail.from),
+		)
+	}
+
+
+
 	/**
 	 * 
-	 * @param code
-	 * @param message
-	 * @param errors
+	 * @param {string} code
+	 * @param {?string} message
+	 * @param {?ApiErrorDetail|?(ApiErrorDetail[])} errors
 	 * @return {ApiError}
 	 */
 	static create(code, message, errors){

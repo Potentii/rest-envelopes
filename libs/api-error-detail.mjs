@@ -1,22 +1,30 @@
 export default class ApiErrorDetail extends Error{
 	/**
-	 * @type {String}
+	 * @type {string}
 	 */
 	code;
 	/**
-	 * @type {String}
+	 * @type {?string}
 	 */
 	message;
 	/**
-	 * @type {String}
+	 * @type {?string}
 	 */
 	field;
 	/**
-	 * @type {*}
+	 * @type {?*}
 	 */
 	value;
 
 
+
+	/**
+	 *
+	 * @param {string} code
+	 * @param {?string} message
+	 * @param {?string} field
+	 * @param {?*} value
+	 */
 	constructor(code, message, field, value){
 		super(message);
 		this.name = this.constructor.name;
@@ -32,12 +40,30 @@ export default class ApiErrorDetail extends Error{
 	}
 
 
+
+	/**
+	 * Converts a plain object into a new instance of this class
+	 * @param {ApiErrorDetail|object} obj
+	 * @return {?ApiErrorDetail}
+	 */
+	static from(obj){
+		if(!obj) return null;
+		return new ApiErrorDetail(
+			obj.code,
+			obj.message,
+			obj.field,
+			obj.value,
+		)
+	}
+
+
+
 	/**
 	 * 
-	 * @param code
-	 * @param message
-	 * @param field
-	 * @param value
+	 * @param {string} code
+	 * @param {?string} message
+	 * @param {?string} field
+	 * @param {?*} value
 	 * @return {ApiErrorDetail}
 	 */
 	static create(code, message, field, value){
