@@ -1,14 +1,23 @@
 import ApiErrorDetail from "./api-error-detail.mjs";
 
 export default class ApiError extends Error{
+
+    /**
+     * @type {?number}
+     */
+    status;
 	/**
-	 * @type {string}
+	 * @type {?string}
 	 */
 	code;
 	/**
 	 * @type {?string}
 	 */
 	message;
+    /**
+     * @type {?string}
+     */
+    track;
 	/**
 	 * @type {?ApiErrorDetail[]}
 	 */
@@ -18,17 +27,21 @@ export default class ApiError extends Error{
 
 	/**
 	 *
-	 * @param {string} code
+     * @param {?number} status
+	 * @param {?string} code
 	 * @param {?string} message
-	 * @param {?ApiErrorDetail|?(ApiErrorDetail[])} errors
+     * @param {?string} [track]
+	 * @param {?ApiErrorDetail|?(ApiErrorDetail[])} [errors]
 	 */
-	constructor(code, message, errors){
+	constructor(status, code, message, track, errors){
 		super(message);
 		this.name = this.constructor.name;
+        this.status = status;
+        this.code = code;
 		this.message = message;
-		this.code = code;
+        this.track = track;
 		
-		if(!Array.isArray(errors) && errors)
+		if(errors && !Array.isArray(errors))
 			errors = [errors];
 		
 		this.errors = errors;
@@ -49,8 +62,10 @@ export default class ApiError extends Error{
 	static from(obj){
 		if(!obj) return null;
 		return new ApiError(
+            obj.status,
 			obj.code,
 			obj.message,
+            obj.track,
 			obj.errors?.map?.(ApiErrorDetail.from),
 		)
 	}
@@ -58,14 +73,16 @@ export default class ApiError extends Error{
 
 
 	/**
-	 * 
-	 * @param {string} code
+	 *
+     * @param {?number} status
+	 * @param {?string} code
 	 * @param {?string} message
-	 * @param {?ApiErrorDetail|?(ApiErrorDetail[])} errors
+     * @param {?string} [track]
+	 * @param {?ApiErrorDetail|?(ApiErrorDetail[])} [errors]
 	 * @return {ApiError}
 	 */
-	static create(code, message, errors){
-		return new ApiError(code, message, errors);
+	static create(status, code, message, track, errors){
+		return new ApiError(status, code, message, track, errors);
 	}
 	
 }

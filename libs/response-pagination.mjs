@@ -2,6 +2,7 @@
  * Pagination information of the requested page
  */
 export default class ResponsePagination {
+
     /**
      * The current page number. The same as the client have requested.
      * @type {?number}

@@ -38,8 +38,10 @@ The content goes into the `data` property, and it can be an object or array.
 {
   "data": {},
   "error": {
+    "status": 999,
     "code": "",
     "message": "",
+    "track": "4769ea6c-c745-485c-8e1e-3ec762e902c8",
     "errors": [
       {
         "code": "",

@@ -104,7 +104,7 @@ export default class ResponseEnvelope{
 	/**
 	 * Creates a response envelope with some data
 	 * Usually used in success cases.
-	 * @param {?*|?(*[])} [data]
+	 * @param {?*|?(*[])} data
 	 * @return {ResponseEnvelope}
 	 */
 	static withData(data, ){

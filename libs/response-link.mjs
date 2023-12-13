@@ -1,8 +1,4 @@
 /**
- * @typedef {string} EResponseLinkType
- */
-
-/**
  * Each HATEOAS link object of a response body
  *
  * @example
@@ -15,12 +11,13 @@
  * @see https://datatracker.ietf.org/doc/html/rfc8288
  */
 export default class ResponseLink{
+
     /**
-     * @type {string}
+     * @type {?string}
      */
     href;
     /**
-     * @type {?EResponseLinkType}
+     * @type {?string}
      */
     type;
     /**
@@ -32,8 +29,8 @@ export default class ResponseLink{
 
     /**
      *
-     * @param {string} href
-     * @param {?EResponseLinkType} type
+     * @param {?string} href
+     * @param {?string} type
      * @param {?string} rel
      */
     constructor(href, type, rel) {
