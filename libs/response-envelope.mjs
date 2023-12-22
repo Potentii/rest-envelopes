@@ -165,6 +165,7 @@ export default class ResponseEnvelope{
 function sanitizeError(err){
 	err.name = undefined;
 	err.stack = undefined;
+    err.cause = undefined;
 	if(Array.isArray(err.errors)){
 		for(let subErr of err.errors){
 			subErr.errors = undefined;

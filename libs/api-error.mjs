@@ -22,34 +22,44 @@ export default class ApiError extends Error{
 	 * @type {?ApiErrorDetail[]}
 	 */
 	errors;
+    /**
+     * @type {?Error}
+     */
+    cause;
 
 
 
 	/**
-	 *
+     *
      * @param {?number} status
-	 * @param {?string} code
-	 * @param {?string} message
+     * @param {?string} code
+     * @param {?string} message
      * @param {?string} [track]
-	 * @param {?ApiErrorDetail|?(ApiErrorDetail[])} [errors]
-	 */
-	constructor(status, code, message, track, errors){
+     * @param {?ApiErrorDetail|?(ApiErrorDetail[])} [errors]
+     * @param {?Error} [cause]
+     */
+	constructor(status, code, message, track, errors, cause){
 		super(message);
 		this.name = this.constructor.name;
         this.status = status;
         this.code = code;
 		this.message = message;
         this.track = track;
-		
 		if(errors && !Array.isArray(errors))
 			errors = [errors];
-		
 		this.errors = errors;
+        this.cause = cause;
 		
 		if('captureStackTrace' in Error)
 			Error.captureStackTrace(this, ApiError);
 		else
 			this.stack = (new Error()).stack;
+
+        if(cause?.stack){
+            if(!this.stack)
+                this.stack = '';
+            this.stack += `\nCaused by: ${cause?.stack}`;
+        }
 	}
 
 
@@ -67,6 +77,7 @@ export default class ApiError extends Error{
 			obj.message,
             obj.track,
 			obj.errors?.map?.(ApiErrorDetail.from),
+            obj.cause,
 		)
 	}
 
@@ -79,10 +90,11 @@ export default class ApiError extends Error{
 	 * @param {?string} message
      * @param {?string} [track]
 	 * @param {?ApiErrorDetail|?(ApiErrorDetail[])} [errors]
+     * @param {?Error} [cause]
 	 * @return {ApiError}
 	 */
-	static create(status, code, message, track, errors){
-		return new ApiError(status, code, message, track, errors);
+	static create(status, code, message, track, errors, cause){
+		return new ApiError(status, code, message, track, errors, cause);
 	}
 	
 }

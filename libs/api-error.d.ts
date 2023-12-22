@@ -6,9 +6,10 @@ declare class ApiError extends Error{
     message: string|null|undefined;
     track: string|null|undefined;
     errors: ApiErrorDetail[]|null;
-    constructor(status: number|null|undefined, code: string|null|undefined, message: string|null|undefined, track?: string|null|undefined, errors?: ApiErrorDetail|ApiErrorDetail[]|null);
+    cause: Error|null;
+    constructor(status: number|null|undefined, code: string|null|undefined, message: string|null|undefined, track?: string|null|undefined, errors?: ApiErrorDetail|ApiErrorDetail[]|null, cause?: Error|null);
     static from(obj: ApiError|any|null): ApiError|null
-    static create(status: number|null|undefined, code: string|null|undefined, message: string|null|undefined, track?: string|null|undefined, errors?: ApiErrorDetail|ApiErrorDetail[]|null): ApiError
+    static create(status: number|null|undefined, code: string|null|undefined, message: string|null|undefined, track?: string|null|undefined, errors?: ApiErrorDetail|ApiErrorDetail[]|null, cause?: Error|null): ApiError
 }
 
 export default ApiError;
