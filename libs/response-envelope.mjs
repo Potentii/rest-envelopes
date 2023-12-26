@@ -51,8 +51,17 @@ export default class ResponseEnvelope{
 			obj.error ? ApiError.from(obj.error) : obj.error,
 			obj.pagination ? ResponsePagination.from(obj.pagination) : obj.pagination,
 			obj.links?.map?.(ResponseLink.from),
-		)
+		);
 	}
+
+
+    /**
+     * Starts a new builder
+     * @return {ResponseEnvelopeBuilder}
+     */
+    static builder(){
+        return new ResponseEnvelopeBuilder();
+    }
 
 
 
@@ -166,6 +175,7 @@ function sanitizeError(err){
 	err.name = undefined;
 	err.stack = undefined;
     err.cause = undefined;
+    err.internalCode = undefined;
 	if(Array.isArray(err.errors)){
 		for(let subErr of err.errors){
 			subErr.errors = undefined;
@@ -189,4 +199,91 @@ function cloneAndSanitizeError(err){
 	}
 	return err;
 }
+
+
+
+
+
+
+class ResponseEnvelopeBuilder{
+    /**
+     * @type {?*|?(*[])}
+     */
+    #data;
+    /**
+     * @type {?ApiError}
+     */
+    #error;
+    /**
+     * @type {?ResponsePagination}
+     */
+    #pagination;
+    /**
+     * @type {?ResponseLink[]}
+     */
+    #links;
+
+
+
+    /**
+     *
+     * @param {?*|?(*[])} data
+     * @return {ResponseEnvelopeBuilder}
+     */
+    data(data){
+        this.#data = data;
+        return this;
+    }
+    /**
+     *
+     * @param {?ApiError} error
+     * @return {ResponseEnvelopeBuilder}
+     */
+    error(error){
+        this.#error = error;
+        return this;
+    }
+    /**
+     *
+     * @param {?ResponsePagination} pagination
+     * @return {ResponseEnvelopeBuilder}
+     */
+    pagination(pagination){
+        this.#pagination = pagination;
+        return this;
+    }
+    /**
+     *
+     * @param {?ResponseLink[]} links
+     * @return {ResponseEnvelopeBuilder}
+     */
+    links(links){
+        this.#links = links;
+        return this;
+    }
+    /**
+     *
+     * @param {?ResponseLink} link
+     * @return {ResponseEnvelopeBuilder}
+     */
+    link(link){
+        if(!Array.isArray(this.#links))
+            this.#links = [];
+        this.#links.push(link);
+        return this;
+    }
+
+
+
+    /**
+     * Builds the object
+     * @return {ResponseEnvelope}
+     */
+    build(){
+        return new ResponseEnvelope(this.#data, this.#error, this.#pagination, this.#links);
+    }
+}
+
+
+
 

@@ -6,6 +6,10 @@ export default class ApiError extends Error{
      * @type {?number}
      */
     status;
+    /**
+     * @type {?string}
+     */
+    internalCode;
 	/**
 	 * @type {?string}
 	 */
@@ -32,16 +36,18 @@ export default class ApiError extends Error{
 	/**
      *
      * @param {?number} status
+     * @param {?string} internalCode
      * @param {?string} code
      * @param {?string} message
      * @param {?string} [track]
      * @param {?ApiErrorDetail|?(ApiErrorDetail[])} [errors]
      * @param {?Error} [cause]
      */
-	constructor(status, code, message, track, errors, cause){
+	constructor(status, internalCode, code, message, track, errors, cause){
 		super(message);
 		this.name = this.constructor.name;
         this.status = status;
+        this.internalCode = internalCode;
         this.code = code;
 		this.message = message;
         this.track = track;
@@ -73,12 +79,13 @@ export default class ApiError extends Error{
 		if(!obj) return null;
 		return new ApiError(
             obj.status,
+            obj.internalCode,
 			obj.code,
 			obj.message,
             obj.track,
 			obj.errors?.map?.(ApiErrorDetail.from),
             obj.cause,
-		)
+		);
 	}
 
 
@@ -86,15 +93,148 @@ export default class ApiError extends Error{
 	/**
 	 *
      * @param {?number} status
-	 * @param {?string} code
+	 * @param {?string} internalCode
+     * @param {?string} code
 	 * @param {?string} message
      * @param {?string} [track]
 	 * @param {?ApiErrorDetail|?(ApiErrorDetail[])} [errors]
      * @param {?Error} [cause]
 	 * @return {ApiError}
 	 */
-	static create(status, code, message, track, errors, cause){
-		return new ApiError(status, code, message, track, errors, cause);
+	static create(status, internalCode, code, message, track, errors, cause){
+		return new ApiError(status, internalCode, code, message, track, errors, cause);
 	}
+
+
+    /**
+     * Starts a new builder
+     * @return {ApiErrorBuilder}
+     */
+    static builder(){
+        return new ApiErrorBuilder();
+    }
 	
 }
+
+
+
+
+class ApiErrorBuilder{
+    /**
+     * @type {?number}
+     */
+    #status;
+    /**
+     * @type {?string}
+     */
+    #internalCode;
+    /**
+     * @type {?string}
+     */
+    #code;
+    /**
+     * @type {?string}
+     */
+    #message;
+    /**
+     * @type {?string}
+     */
+    #track;
+    /**
+     * @type {?ApiErrorDetail[]}
+     */
+    #errors;
+    /**
+     * @type {?Error}
+     */
+    #cause;
+
+    /**
+     *
+     * @param {?number} status
+     * @return {ApiErrorBuilder}
+     */
+    status(status){
+        this.#status = status;
+        return this;
+    }
+    /**
+     *
+     * @param {?string} internalCode
+     * @return {ApiErrorBuilder}
+     */
+    internalCode(internalCode){
+        this.#internalCode = internalCode;
+        return this;
+    }
+    /**
+     *
+     * @param {?string} code
+     * @return {ApiErrorBuilder}
+     */
+    code(code){
+        this.#code = code;
+        return this;
+    }
+    /**
+     *
+     * @param {?string} message
+     * @return {ApiErrorBuilder}
+     */
+    message(message){
+        this.#message = message;
+        return this;
+    }
+    /**
+     *
+     * @param {?string} track
+     * @return {ApiErrorBuilder}
+     */
+    track(track){
+        this.#track = track;
+        return this;
+    }
+    /**
+     *
+     * @param {?ApiErrorDetail[]} errors
+     * @return {ApiErrorBuilder}
+     */
+    errors(errors){
+        this.#errors = errors;
+        return this;
+    }
+    /**
+     *
+     * @param {?ApiErrorDetail} error
+     * @return {ApiErrorBuilder}
+     */
+    error(error){
+        if(!Array.isArray(this.#errors))
+            this.#errors = [];
+        this.#errors.push(error);
+        return this;
+    }
+    /**
+     *
+     * @param {?Error} cause
+     * @return {ApiErrorBuilder}
+     */
+    cause(cause){
+        this.#cause = cause;
+        return this;
+    }
+
+
+
+    /**
+     * Builds the object
+     * @return {ApiError}
+     */
+    build(){
+        return new ApiError(this.#status, this.#internalCode, this.#code, this.#message, this.#track, this.#errors, this.#cause);
+    }
+}
+
+
+
+

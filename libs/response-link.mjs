@@ -52,6 +52,73 @@ export default class ResponseLink{
             obj.href,
             obj.type,
             obj.rel,
-        )
+        );
+    }
+
+
+    /**
+     * Starts a new builder
+     * @return {ResponseLinkBuilder}
+     */
+    static builder(){
+        return new ResponseLinkBuilder();
+    }
+}
+
+
+
+
+class ResponseLinkBuilder{
+    /**
+     * @type {string}
+     */
+    #href;
+    /**
+     * @type {?string}
+     */
+    #type;
+    /**
+     * @type {?string}
+     */
+    #rel;
+
+
+
+    /**
+     *
+     * @param {?string} href
+     * @return {ResponseLinkBuilder}
+     */
+    href(href){
+        this.#href = href;
+        return this;
+    }
+    /**
+     *
+     * @param {?string} type
+     * @return {ResponseLinkBuilder}
+     */
+    type(type){
+        this.#type = type;
+        return this;
+    }
+    /**
+     *
+     * @param {?string} rel
+     * @return {ResponseLinkBuilder}
+     */
+    rel(rel){
+        this.#rel = rel;
+        return this;
+    }
+
+
+
+    /**
+     * Builds the object
+     * @return {ResponseLink}
+     */
+    build(){
+        return new ResponseLink(this.#href, this.#type, this.#rel);
     }
 }

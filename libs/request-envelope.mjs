@@ -26,6 +26,49 @@ export default class RequestEnvelope{
 		if(!obj) return null;
 		return new RequestEnvelope(
 			obj.data,
-		)
+		);
 	}
+
+
+    /**
+     * Starts a new builder
+     * @return {RequestEnvelopeBuilder}
+     */
+    static builder(){
+        return new RequestEnvelopeBuilder();
+    }
 }
+
+
+
+
+class RequestEnvelopeBuilder{
+
+    /**
+     * @type {?*|?(*[])}
+     */
+    #data;
+
+
+
+    /**
+     *
+     * @param {?*|?(*[])} data
+     * @return {RequestEnvelopeBuilder}
+     */
+    data(data){
+        this.#data = data;
+        return this;
+    }
+
+
+
+    /**
+     * Builds the object
+     * @return {RequestEnvelope}
+     */
+    build(){
+        return new RequestEnvelope(this.#data);
+    }
+}
+

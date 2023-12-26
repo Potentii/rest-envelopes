@@ -54,7 +54,7 @@ export default class ApiErrorDetail extends Error{
 			obj.message,
 			obj.field,
 			obj.value,
-		)
+		);
 	}
 
 
@@ -70,5 +70,89 @@ export default class ApiErrorDetail extends Error{
 	static create(code, message, field, value){
 		return new ApiErrorDetail(code, message, field, value);
 	}
+
+
+    /**
+     * Starts a new builder
+     * @return {ApiErrorDetailBuilder}
+     */
+    static builder(){
+        return new ApiErrorDetailBuilder();
+    }
 	
 }
+
+
+
+
+class ApiErrorDetailBuilder{
+    /**
+     * @type {?string}
+     */
+    #code;
+    /**
+     * @type {?string}
+     */
+    #message;
+    /**
+     * @type {?string}
+     */
+    #field;
+    /**
+     * @type {?*}
+     */
+    #value;
+
+
+
+    /**
+     *
+     * @param {?string} code
+     * @return {ApiErrorDetailBuilder}
+     */
+    code(code){
+        this.#code = code;
+        return this;
+    }
+    /**
+     *
+     * @param {?string} message
+     * @return {ApiErrorDetailBuilder}
+     */
+    message(message){
+        this.#message = message;
+        return this;
+    }
+    /**
+     *
+     * @param {?string} field
+     * @return {ApiErrorDetailBuilder}
+     */
+    field(field){
+        this.#field = field;
+        return this;
+    }
+    /**
+     *
+     * @param {?*} value
+     * @return {ApiErrorDetailBuilder}
+     */
+    value(value){
+        this.#value = value;
+        return this;
+    }
+
+
+
+    /**
+     * Builds the object
+     * @return {ApiErrorDetail}
+     */
+    build(){
+        return new ApiErrorDetail(this.#code, this.#message, this.#field, this.#value);
+    }
+}
+
+
+
+

@@ -15,6 +15,7 @@ declare class ResponseEnvelope{
     get hasPagination(): boolean;
     get hasLinks(): boolean;
     static from(obj: ResponseEnvelope|any|null): ResponseEnvelope|null;
+    static builder(): ResponseEnvelopeBuilder
     static withData(data: any|null|undefined): ResponseEnvelope;
     static withDataAndPagination(data: any|null|undefined, pagination: ResponsePagination): ResponseEnvelope;
     static withDataAndPaginationAndLinks(data: any|null|undefined, pagination: ResponsePagination, links: ResponseLink[]): ResponseEnvelope;
@@ -22,5 +23,25 @@ declare class ResponseEnvelope{
     static withError(err: ApiError): ResponseEnvelope;
     static withErrorAndLinks(err: ApiError, links: ResponseLink[]): ResponseEnvelope;
 }
+
+
+declare class ResponseEnvelopeBuilder{
+    // @ts-ignore
+    #data: any|null|undefined;
+    // @ts-ignore
+    #error: ApiError|null;
+    // @ts-ignore
+    #pagination: ResponsePagination|null;
+    // @ts-ignore
+    #links: ResponseLink[]|null;
+    constructor();
+    data(data: any|null|undefined): ResponseEnvelopeBuilder;
+    error(error: ApiError|null): ResponseEnvelopeBuilder;
+    pagination(pagination: ResponsePagination|null): ResponseEnvelopeBuilder;
+    links(links: ResponseLink[]|null): ResponseEnvelopeBuilder;
+    link(link: ResponseLink|null): ResponseEnvelopeBuilder;
+    build(): ResponseEnvelope;
+}
+
 
 export default ResponseEnvelope;
