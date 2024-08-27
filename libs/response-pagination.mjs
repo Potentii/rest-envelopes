@@ -4,8 +4,8 @@
 export default class ResponsePagination {
 
     /**
-     * The current page number. The same as the client have requested.
-     * @type {?number}
+     * The current page number/ID/reference. The same as the client have requested.
+     * @type {?number|?string}
      */
     page;
     /**
@@ -28,23 +28,37 @@ export default class ResponsePagination {
      * @type {?number}
      */
     totalSize;
+    /**
+     * The next page number/ID/reference, if any.
+     * @type {?number|?string}
+     */
+    next;
+    /**
+     * The previous page number/ID/reference, if any.
+     * @type {?number|?string}
+     */
+    prev;
 
 
 
     /**
      *
-     * @param {?number} page
+     * @param {?number|?string} page
      * @param {?number} pageSize
      * @param {?number} actualPageSize
      * @param {?number} pages
      * @param {?number} totalSize
+     * @param {?number|?string} next
+     * @param {?number|?string} prev
      */
-    constructor(page, pageSize, actualPageSize, pages, totalSize) {
+    constructor(page, pageSize, actualPageSize, pages, totalSize, next, prev) {
         this.page = page;
         this.pageSize = pageSize;
         this.actualPageSize = actualPageSize;
         this.pages = pages;
         this.totalSize = totalSize;
+        this.next = next;
+        this.prev = prev;
     }
 
 
@@ -62,6 +76,8 @@ export default class ResponsePagination {
             obj.actualPageSize,
             obj.pages,
             obj.totalSize,
+            obj.next,
+            obj.prev,
         );
     }
 
@@ -81,7 +97,7 @@ export default class ResponsePagination {
 class ResponsePaginationBuilder{
     /**
      *
-     * @type {?number}
+     * @type {?number|?string}
      */
     #page;
     /**
@@ -104,13 +120,23 @@ class ResponsePaginationBuilder{
      * @type {?number}
      */
     #totalSize;
+    /**
+     *
+     * @type {?number|?string}
+     */
+    #next;
+    /**
+     *
+     * @type {?number|?string}
+     */
+    #prev;
 
 
 
 
     /**
-     * The current page number. The same as the client have requested.
-     * @param {?number} page
+     * The current page number/ID/reference. The same as the client have requested.
+     * @param {?number|?string} page
      * @return {ResponsePaginationBuilder}
      */
     page(page){
@@ -153,6 +179,24 @@ class ResponsePaginationBuilder{
         this.#totalSize = totalSize;
         return this;
     }
+    /**
+     * The current page number/ID/reference, if any.
+     * @param {?number|?string} next
+     * @return {ResponsePaginationBuilder}
+     */
+    next(next){
+        this.#next = next;
+        return this;
+    }
+    /**
+     * The current page number/ID/reference, if any.
+     * @param {?number|?string} prev
+     * @return {ResponsePaginationBuilder}
+     */
+    prev(prev){
+        this.#prev = prev;
+        return this;
+    }
 
 
 
@@ -161,7 +205,7 @@ class ResponsePaginationBuilder{
      * @return {ResponsePagination}
      */
     build(){
-        return new ResponsePagination(this.#page, this.#pageSize, this.#actualPageSize, this.#pages, this.#totalSize);
+        return new ResponsePagination(this.#page, this.#pageSize, this.#actualPageSize, this.#pages, this.#totalSize, this.#next, this.#prev);
     }
 }
 

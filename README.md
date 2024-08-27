@@ -56,7 +56,9 @@ The content goes into the `data` property, and it can be an object or array.
     "pageSize": 0,
     "actualPageSize": 0,
     "pages": 0,
-    "totalSize": 0
+    "totalSize": 0,
+    "next": 0,
+    "prev": 0
   },
   "links": [
     {
