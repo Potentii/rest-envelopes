@@ -5,7 +5,7 @@ export default class ApiErrorDetail extends Error {
 	 */
 	code;
 	/**
-	 * @type {?string}
+	 * @type {string}
 	 */
 	message;
 	/**
@@ -21,7 +21,7 @@ export default class ApiErrorDetail extends Error {
 	/**
 	 *
 	 * @param {?string} code
-	 * @param {?string} message
+	 * @param {string} message
 	 * @param {?string} field
 	 * @param {?*} value
 	 */
@@ -59,7 +59,7 @@ export default class ApiErrorDetail extends Error {
 	/**
 	 *
 	 * @param {?string} code
-	 * @param {?string} message
+	 * @param {string} message
 	 * @param {?string} field
 	 * @param {?*} value
 	 * @return {ApiErrorDetail}

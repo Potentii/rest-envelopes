@@ -7,7 +7,11 @@
 	"main": "main.mjs",
 	"types": "main.d.ts",
 	"type": "module",
-	"scripts": {
+	"exports": {
+		".": {
+			"import": "./main.mjs",
+			"types": "./main.d.ts"
+		}
 	},
 	"files": [
 		"main.mjs",

@@ -15,7 +15,7 @@ export default class ApiError extends Error {
 	 */
 	code;
 	/**
-	 * @type {?string}
+	 * @type {string}
 	 */
 	message;
 	/**
@@ -37,7 +37,7 @@ export default class ApiError extends Error {
 	 * @param {?number} status
 	 * @param {?string} internalCode
 	 * @param {?string} code
-	 * @param {?string} message
+	 * @param {string} message
 	 * @param {?string} [track]
 	 * @param {?ApiErrorDetail|?(ApiErrorDetail[])} [errors]
 	 * @param {?Error} [cause]
@@ -92,7 +92,7 @@ export default class ApiError extends Error {
 	 * @param {?number} status
 	 * @param {?string} internalCode
 	 * @param {?string} code
-	 * @param {?string} message
+	 * @param {string} message
 	 * @param {?string} [track]
 	 * @param {?ApiErrorDetail|?(ApiErrorDetail[])} [errors]
 	 * @param {?Error} [cause]
