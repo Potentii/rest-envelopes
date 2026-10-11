@@ -1,35 +1,46 @@
-declare class ResponsePagination{
-    page: number|string|null|undefined;
-    pageSize: number|null|undefined;
-    actualPageSize: number|null|undefined;
-    pages: number|null|undefined;
-    totalSize: number|null|undefined;
-    next: number|string|null|undefined;
-    prev: number|string|null|undefined;
-    constructor(page: number|string|null|undefined, pageSize: number|null|undefined, actualPageSize: number|null|undefined, pages: number|null|undefined, totalSize: number|null|undefined, next: number|string|null|undefined, prev: number|string|null|undefined);
-    static from(obj: ResponsePagination|any|null): ResponsePagination|null
-    static builder(): ResponsePaginationBuilder
+declare class ResponsePagination {
+	page: number | string | null | undefined;
+	pageSize: number | null | undefined;
+	actualPageSize: number | null | undefined;
+	pages: number | null | undefined;
+	totalSize: number | null | undefined;
+	next: number | string | null | undefined;
+	prev: number | string | null | undefined;
+
+	constructor(page: number | string | null | undefined, pageSize: number | null | undefined, actualPageSize: number | null | undefined, pages: number | null | undefined, totalSize: number | null | undefined, next: number | string | null | undefined, prev: number | string | null | undefined);
+
+	static from(obj: ResponsePagination | any | null): ResponsePagination | null
+
+	static builder(): ResponsePaginationBuilder
 }
 
 
+declare class ResponsePaginationBuilder {
+	#page: number | string | null | undefined;
+	#pageSize: number | null | undefined;
+	#actualPageSize: number | null | undefined;
+	#pages: number | null | undefined;
+	#totalSize: number | null | undefined;
+	#next: number | string | null | undefined;
+	#prev: number | string | null | undefined;
 
-declare class ResponsePaginationBuilder{
-    #page: number|string|null|undefined;
-    #pageSize: number|null|undefined;
-    #actualPageSize: number|null|undefined;
-    #pages: number|null|undefined;
-    #totalSize: number|null|undefined;
-    #next: number|string|null|undefined;
-    #prev: number|string|null|undefined;
-    constructor();
-    page(page: number|string|null|undefined): ResponsePaginationBuilder;
-    pageSize(pageSize: number|null|undefined): ResponsePaginationBuilder;
-    actualPageSize(actualPageSize: number|null|undefined): ResponsePaginationBuilder;
-    pages(pages: number|null|undefined): ResponsePaginationBuilder;
-    totalSize(totalSize: number|null|undefined): ResponsePaginationBuilder;
-    next(next: number|string|null|undefined): ResponsePaginationBuilder;
-    prev(prev: number|string|null|undefined): ResponsePaginationBuilder;
-    build(): ResponsePagination;
+	constructor();
+
+	page(page: number | string | null | undefined): ResponsePaginationBuilder;
+
+	pageSize(pageSize: number | null | undefined): ResponsePaginationBuilder;
+
+	actualPageSize(actualPageSize: number | null | undefined): ResponsePaginationBuilder;
+
+	pages(pages: number | null | undefined): ResponsePaginationBuilder;
+
+	totalSize(totalSize: number | null | undefined): ResponsePaginationBuilder;
+
+	next(next: number | string | null | undefined): ResponsePaginationBuilder;
+
+	prev(prev: number | string | null | undefined): ResponsePaginationBuilder;
+
+	build(): ResponsePagination;
 }
 
 export default ResponsePagination;
