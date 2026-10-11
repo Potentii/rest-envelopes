@@ -1,74 +1,76 @@
-export default class RequestEnvelope{
+/**
+ * @template T
+ */
+export default class RequestEnvelope {
 
 	/**
-	 * @type {?*|?(*[])}
+	 * @type {T}
 	 */
 	data;
 
 
-
 	/**
 	 *
-	 * @param {?*|?(*[])} data
+	 * @param {T} data
 	 */
-	constructor(data){
+	constructor(data) {
 		this.data = data;
 	}
 
 
-
 	/**
 	 * Converts a plain object into a new instance of this class
-	 * @param {RequestEnvelope|object} obj
-	 * @return {?RequestEnvelope}
+	 * @template T
+	 * @param {RequestEnvelope<T>|object} obj
+	 * @return {?RequestEnvelope<T>}
 	 */
-	static from(obj){
-		if(!obj) return null;
+	static from(obj) {
+		if (!obj) return null;
 		return new RequestEnvelope(
 			obj.data,
 		);
 	}
 
 
-    /**
-     * Starts a new builder
-     * @return {RequestEnvelopeBuilder}
-     */
-    static builder(){
-        return new RequestEnvelopeBuilder();
-    }
+	/**
+	 * Starts a new builder
+	 * @template T
+	 * @return {RequestEnvelopeBuilder<T>}
+	 */
+	static builder() {
+		return new RequestEnvelopeBuilder();
+	}
 }
 
 
+/**
+ * @template T
+ */
+class RequestEnvelopeBuilder {
+
+	/**
+	 * @type {T}
+	 */
+	#data;
 
 
-class RequestEnvelopeBuilder{
-
-    /**
-     * @type {?*|?(*[])}
-     */
-    #data;
-
-
-
-    /**
-     *
-     * @param {?*|?(*[])} data
-     * @return {RequestEnvelopeBuilder}
-     */
-    data(data){
-        this.#data = data;
-        return this;
-    }
+	/**
+	 *
+	 * @param {T} data
+	 * @return {RequestEnvelopeBuilder}
+	 */
+	data(data) {
+		this.#data = data;
+		return this;
+	}
 
 
-
-    /**
-     * Builds the object
-     * @return {RequestEnvelope}
-     */
-    build(){
-        return new RequestEnvelope(this.#data);
-    }
+	/**
+	 * Builds the object
+	 * @return {RequestEnvelope<T>}
+	 */
+	build() {
+		return new RequestEnvelope(this.#data);
+	}
 }
 

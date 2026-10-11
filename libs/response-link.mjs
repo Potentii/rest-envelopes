@@ -10,115 +10,111 @@
  *
  * @see https://datatracker.ietf.org/doc/html/rfc8288
  */
-export default class ResponseLink{
+export default class ResponseLink {
 
-    /**
-     * @type {?string}
-     */
-    href;
-    /**
-     * @type {?string}
-     */
-    type;
-    /**
-     * @type {?string}
-     */
-    rel;
-
-
-
-    /**
-     *
-     * @param {?string} href
-     * @param {?string} type
-     * @param {?string} rel
-     */
-    constructor(href, type, rel) {
-        this.href = href;
-        this.type = type;
-        this.rel = rel;
-    }
+	/**
+	 * @type {?string}
+	 */
+	href;
+	/**
+	 * @type {?string}
+	 */
+	type;
+	/**
+	 * @type {?string}
+	 */
+	rel;
 
 
-
-    /**
-     * Converts a plain object into a new instance of this class
-     * @param {ResponseLink|object} obj
-     * @return {?ResponseLink}
-     */
-    static from(obj){
-        if(!obj) return null;
-        return new ResponseLink(
-            obj.href,
-            obj.type,
-            obj.rel,
-        );
-    }
+	/**
+	 *
+	 * @param {?string} href
+	 * @param {?string} type
+	 * @param {?string} rel
+	 */
+	constructor(href, type, rel) {
+		this.href = href;
+		this.type = type;
+		this.rel = rel;
+	}
 
 
-    /**
-     * Starts a new builder
-     * @return {ResponseLinkBuilder}
-     */
-    static builder(){
-        return new ResponseLinkBuilder();
-    }
+	/**
+	 * Converts a plain object into a new instance of this class
+	 * @param {ResponseLink|object} obj
+	 * @return {?ResponseLink}
+	 */
+	static from(obj) {
+		if (!obj) return null;
+		return new ResponseLink(
+			obj.href,
+			obj.type,
+			obj.rel,
+		);
+	}
+
+
+	/**
+	 * Starts a new builder
+	 * @return {ResponseLinkBuilder}
+	 */
+	static builder() {
+		return new ResponseLinkBuilder();
+	}
 }
 
 
+class ResponseLinkBuilder {
+	/**
+	 * @type {string}
+	 */
+	#href;
+	/**
+	 * @type {?string}
+	 */
+	#type;
+	/**
+	 * @type {?string}
+	 */
+	#rel;
 
 
-class ResponseLinkBuilder{
-    /**
-     * @type {string}
-     */
-    #href;
-    /**
-     * @type {?string}
-     */
-    #type;
-    /**
-     * @type {?string}
-     */
-    #rel;
+	/**
+	 *
+	 * @param {?string} href
+	 * @return {ResponseLinkBuilder}
+	 */
+	href(href) {
+		this.#href = href;
+		return this;
+	}
+
+	/**
+	 *
+	 * @param {?string} type
+	 * @return {ResponseLinkBuilder}
+	 */
+	type(type) {
+		this.#type = type;
+		return this;
+	}
+
+	/**
+	 *
+	 * @param {?string} rel
+	 * @return {ResponseLinkBuilder}
+	 */
+	rel(rel) {
+		this.#rel = rel;
+		return this;
+	}
 
 
-
-    /**
-     *
-     * @param {?string} href
-     * @return {ResponseLinkBuilder}
-     */
-    href(href){
-        this.#href = href;
-        return this;
-    }
-    /**
-     *
-     * @param {?string} type
-     * @return {ResponseLinkBuilder}
-     */
-    type(type){
-        this.#type = type;
-        return this;
-    }
-    /**
-     *
-     * @param {?string} rel
-     * @return {ResponseLinkBuilder}
-     */
-    rel(rel){
-        this.#rel = rel;
-        return this;
-    }
-
-
-
-    /**
-     * Builds the object
-     * @return {ResponseLink}
-     */
-    build(){
-        return new ResponseLink(this.#href, this.#type, this.#rel);
-    }
+	/**
+	 * Builds the object
+	 * @return {ResponseLink}
+	 */
+	build() {
+		return new ResponseLink(this.#href, this.#type, this.#rel);
+	}
 }

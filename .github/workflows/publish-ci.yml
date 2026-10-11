@@ -1,32 +1,38 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Publish CI
 
 on:
-  release:
-    types: [ published ]
+   release:
+      types: [ published ]
+
+permissions:
+   id-token: write  # Required for OIDC
+   contents: write
 
 jobs:
-  build:
+   build:
 
-    runs-on: ubuntu-latest
+      runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [ 20.x ]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+      steps:
+         -  uses: actions/checkout@v7
 
-    steps:
-      - uses: actions/checkout@v4
+         -  name: Setup Node.js
+            uses: actions/setup-node@v7
+            with:
+               node-version: '24'
 
-      # Setup .npmrc file to publish to npm
+         -  name: Update NPM
+            run: npm install -g npm@latest # Required for OIDC
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm install
-      - run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+         -  name: Install dependencies
+            run: npm ci
+
+         -  name: Build project
+            run: npm run build --if-present
+
+         -  name: Test project
+            run: npm run test:ci --if-present
+
+         -  name: Publish package
+            run: npm publish --provenance
+
