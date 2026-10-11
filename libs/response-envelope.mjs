@@ -2,10 +2,13 @@ import ResponseLink from "./response-link.mjs";
 import ResponsePagination from "./response-pagination.mjs";
 import ApiError from "./api-error.mjs";
 
+/**
+ * @template T
+ */
 export default class ResponseEnvelope{
 
 	/**
-	 * @type {?*|?(*[])}
+	 * @type {T}
 	 */
 	data;
 	/**
@@ -25,7 +28,7 @@ export default class ResponseEnvelope{
 
 	/**
 	 *
-	 * @param {?*|?(*[])} data
+	 * @param {T} data
 	 * @param {?ApiError} error
 	 * @param {?ResponsePagination} pagination
 	 * @param {?ResponseLink[]} links
@@ -41,8 +44,9 @@ export default class ResponseEnvelope{
 
 	/**
 	 * Converts a plain object into a new instance of this class
-	 * @param {ResponseEnvelope|object} obj
-	 * @return {?ResponseEnvelope}
+     * @template T
+	 * @param {ResponseEnvelope<T>|object} obj
+	 * @return {?ResponseEnvelope<T>}
 	 */
 	static from(obj){
 		if(!obj) return null;
@@ -57,7 +61,8 @@ export default class ResponseEnvelope{
 
     /**
      * Starts a new builder
-     * @return {ResponseEnvelopeBuilder}
+     * @template T
+     * @return {ResponseEnvelopeBuilder<T>}
      */
     static builder(){
         return new ResponseEnvelopeBuilder();
@@ -74,7 +79,7 @@ export default class ResponseEnvelope{
 	}
 	/**
 	 *
-	 * @return {arg is any[]}
+	 * @return {boolean}
 	 */
 	get isDataAnArray(){
 		return Array.isArray(this.data);
@@ -98,14 +103,14 @@ export default class ResponseEnvelope{
 	 * @return {boolean}
 	 */
 	get hasPagination(){
-		return !!this.error;
+		return !!this.pagination;
 	}
 	/**
 	 *
-	 * @return {arg is any[]}
+	 * @return {boolean}
 	 */
 	get hasLinks(){
-		return Array.isArray(this.links);
+		return Array.isArray(this.links) && this.links.length > 0;
 	}
 
 
@@ -113,36 +118,36 @@ export default class ResponseEnvelope{
 	/**
 	 * Creates a response envelope with some data
 	 * Usually used in success cases.
-	 * @param {?*|?(*[])} data
-	 * @return {ResponseEnvelope}
+	 * @param {T} data
+	 * @return {ResponseEnvelope<T>}
 	 */
 	static withData(data, ){
 		return new ResponseEnvelope(data, undefined, undefined, undefined);
 	}
 	/**
 	 *
-	 * @param {?*|?(*[])} data
+	 * @param {T} data
 	 * @param {ResponsePagination} pagination
-	 * @return {ResponseEnvelope}
+	 * @return {ResponseEnvelope<T>}
 	 */
 	static withDataAndPagination(data, pagination){
 		return new ResponseEnvelope(data, undefined, pagination, undefined);
 	}
 	/**
 	 *
-	 * @param {?*|?(*[])} data
+	 * @param {T} data
 	 * @param {ResponsePagination} pagination
 	 * @param {ResponseLink[]} links
-	 * @return {ResponseEnvelope}
+	 * @return {ResponseEnvelope<T>}
 	 */
 	static withDataAndPaginationAndLinks(data, pagination, links){
 		return new ResponseEnvelope(data, undefined, pagination, links);
 	}
 	/**
 	 *
-	 * @param {?*|?(*[])} data
+	 * @param {T} data
 	 * @param {ResponseLink[]} links
-	 * @return {ResponseEnvelope}
+	 * @return {ResponseEnvelope<T>}
 	 */
 	static withDataAndLinks(data, links){
 		return new ResponseEnvelope(data, undefined, undefined, links);
@@ -153,7 +158,7 @@ export default class ResponseEnvelope{
 	/**
 	 *
 	 * @param {ApiError} err
-	 * @return {ResponseEnvelope}
+	 * @return {ResponseEnvelope<T>}
 	 */
 	static withError(err){
 		return new ResponseEnvelope(undefined, cloneAndSanitizeError(err), undefined, undefined);
@@ -162,7 +167,7 @@ export default class ResponseEnvelope{
 	 *
 	 * @param {ApiError} err
 	 * @param {ResponseLink[]} links
-	 * @return {ResponseEnvelope}
+	 * @return {ResponseEnvelope<T>}
 	 */
 	static withErrorAndLinks(err, links){
 		return new ResponseEnvelope(undefined, cloneAndSanitizeError(err), undefined, links);
@@ -201,13 +206,12 @@ function cloneAndSanitizeError(err){
 }
 
 
-
-
-
-
+/**
+ * @template T
+ */
 class ResponseEnvelopeBuilder{
     /**
-     * @type {?*|?(*[])}
+     * @type {T}
      */
     #data;
     /**
@@ -227,8 +231,8 @@ class ResponseEnvelopeBuilder{
 
     /**
      *
-     * @param {?*|?(*[])} data
-     * @return {ResponseEnvelopeBuilder}
+     * @param {T} data
+     * @return {ResponseEnvelopeBuilder<T>}
      */
     data(data){
         this.#data = data;
@@ -237,7 +241,7 @@ class ResponseEnvelopeBuilder{
     /**
      *
      * @param {?ApiError} error
-     * @return {ResponseEnvelopeBuilder}
+     * @return {ResponseEnvelopeBuilder<T>}
      */
     error(error){
         this.#error = error;
@@ -246,7 +250,7 @@ class ResponseEnvelopeBuilder{
     /**
      *
      * @param {?ResponsePagination} pagination
-     * @return {ResponseEnvelopeBuilder}
+     * @return {ResponseEnvelopeBuilder<T>}
      */
     pagination(pagination){
         this.#pagination = pagination;
@@ -255,7 +259,7 @@ class ResponseEnvelopeBuilder{
     /**
      *
      * @param {?ResponseLink[]} links
-     * @return {ResponseEnvelopeBuilder}
+     * @return {ResponseEnvelopeBuilder<T>}
      */
     links(links){
         this.#links = links;
@@ -264,7 +268,7 @@ class ResponseEnvelopeBuilder{
     /**
      *
      * @param {?ResponseLink} link
-     * @return {ResponseEnvelopeBuilder}
+     * @return {ResponseEnvelopeBuilder<T>}
      */
     link(link){
         if(!Array.isArray(this.#links))
@@ -277,7 +281,7 @@ class ResponseEnvelopeBuilder{
 
     /**
      * Builds the object
-     * @return {ResponseEnvelope}
+     * @return {ResponseEnvelope<T>}
      */
     build(){
         return new ResponseEnvelope(this.#data, this.#error, this.#pagination, this.#links);

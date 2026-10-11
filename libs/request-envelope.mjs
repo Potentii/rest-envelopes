@@ -1,7 +1,10 @@
+/**
+ * @template T
+ */
 export default class RequestEnvelope{
 
 	/**
-	 * @type {?*|?(*[])}
+	 * @type {T}
 	 */
 	data;
 
@@ -9,7 +12,7 @@ export default class RequestEnvelope{
 
 	/**
 	 *
-	 * @param {?*|?(*[])} data
+	 * @param {T} data
 	 */
 	constructor(data){
 		this.data = data;
@@ -19,8 +22,9 @@ export default class RequestEnvelope{
 
 	/**
 	 * Converts a plain object into a new instance of this class
-	 * @param {RequestEnvelope|object} obj
-	 * @return {?RequestEnvelope}
+     * @template T
+	 * @param {RequestEnvelope<T>|object} obj
+	 * @return {?RequestEnvelope<T>}
 	 */
 	static from(obj){
 		if(!obj) return null;
@@ -32,7 +36,8 @@ export default class RequestEnvelope{
 
     /**
      * Starts a new builder
-     * @return {RequestEnvelopeBuilder}
+     * @template T
+     * @return {RequestEnvelopeBuilder<T>}
      */
     static builder(){
         return new RequestEnvelopeBuilder();
@@ -41,11 +46,13 @@ export default class RequestEnvelope{
 
 
 
-
+/**
+ * @template T
+ */
 class RequestEnvelopeBuilder{
 
     /**
-     * @type {?*|?(*[])}
+     * @type {T}
      */
     #data;
 
@@ -53,7 +60,7 @@ class RequestEnvelopeBuilder{
 
     /**
      *
-     * @param {?*|?(*[])} data
+     * @param {T} data
      * @return {RequestEnvelopeBuilder}
      */
     data(data){
@@ -65,7 +72,7 @@ class RequestEnvelopeBuilder{
 
     /**
      * Builds the object
-     * @return {RequestEnvelope}
+     * @return {RequestEnvelope<T>}
      */
     build(){
         return new RequestEnvelope(this.#data);

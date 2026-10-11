@@ -30,7 +30,7 @@ export default class ApiErrorDetail extends Error{
 		super(message);
 		this.name = this.constructor.name;
 		this.code = code;
-		this.message = message;
+		this.message = message || '';
 		this.field = field;
 		this.value = value;
 

@@ -1,16 +1,15 @@
-declare class RequestEnvelope{
-    data: any|null|undefined;
-    constructor(data: any|null|undefined);
-    static from(obj: RequestEnvelope|any|null): RequestEnvelope|null
-    static builder(): RequestEnvelopeBuilder
+declare class RequestEnvelope<T = unknown>{
+    data: T|null|undefined;
+    constructor(data: T|null|undefined);
+    static from<T = unknown>(obj: RequestEnvelope<T>|{data:T}|any|null|undefined): RequestEnvelope<T>|null
+    static builder<T = unknown>(): RequestEnvelopeBuilder<T>
 }
 
-declare class RequestEnvelopeBuilder{
-    // @ts-ignore
-    #data: any|null|undefined;
+declare class RequestEnvelopeBuilder<T = unknown>{
+    #data: T|null|undefined;
     constructor();
-    data(data: any|null|undefined): RequestEnvelopeBuilder;
-    build(): RequestEnvelope;
+    data(data: T|null|undefined): RequestEnvelopeBuilder<T>;
+    build(): RequestEnvelope<T>;
 }
 
 

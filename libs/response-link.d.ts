@@ -10,11 +10,8 @@ declare class ResponseLink{
 
 
 declare class ResponseLinkBuilder{
-    // @ts-ignore
     #href: string|null|undefined;
-    // @ts-ignore
     #type: string|null|undefined;
-    // @ts-ignore
     #rel: string|null|undefined;
     constructor();
     href(href: string|null|undefined): ResponseLinkBuilder;

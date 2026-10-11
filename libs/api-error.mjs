@@ -49,7 +49,7 @@ export default class ApiError extends Error{
         this.status = status;
         this.internalCode = internalCode;
         this.code = code;
-		this.message = message;
+		this.message = message || '';
         this.track = track;
 		if(errors && !Array.isArray(errors))
 			errors = [errors];

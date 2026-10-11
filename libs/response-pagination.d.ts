@@ -14,19 +14,12 @@ declare class ResponsePagination{
 
 
 declare class ResponsePaginationBuilder{
-    // @ts-ignore
     #page: number|string|null|undefined;
-    // @ts-ignore
     #pageSize: number|null|undefined;
-    // @ts-ignore
     #actualPageSize: number|null|undefined;
-    // @ts-ignore
     #pages: number|null|undefined;
-    // @ts-ignore
     #totalSize: number|null|undefined;
-    // @ts-ignore
     #next: number|string|null|undefined;
-    // @ts-ignore
     #prev: number|string|null|undefined;
     constructor();
     page(page: number|string|null|undefined): ResponsePaginationBuilder;
